@@ -9,14 +9,17 @@
 //Function prototypes
 uint8_t getFirstValueFromCSV(const char * fileName, bool *error = nullptr);
 
+// LSB
 static const u1_t PROGMEM APPEUI[8] = {0x00, 0x6F, 0x6E, 0x69, 0x67, 0x61, 0x72, 0x64};
 void os_getArtEui (u1_t* buf) {  memcpy_P(buf, APPEUI, 8);}
 static const u1_t PROGMEM DEVEUI[8] = {0x31, 0x6F, 0x6E, 0x69, 0x67, 0x61, 0x72, 0x64};
 void os_getDevEui (u1_t* buf) {  memcpy_P(buf, DEVEUI, 8);}
+
+// MSB
 static const u1_t PROGMEM APPKEY[16] = {0x5F, 0xAC, 0x47, 0x0F, 0x83, 0x6C, 0x53, 0xF6, 0xD5, 0xEE, 0x1A, 0x6F, 0xF4, 0x78, 0xC1, 0x83};
 void os_getDevKey (u1_t* buf) {  memcpy_P(buf, APPKEY, 16);}
 
-static uint8_t mydata[] = "1";
+static uint8_t mydata[] = "0";
 static osjob_t sendjob;
 const unsigned TX_INTERVAL = 2;
 
@@ -51,10 +54,8 @@ void do_send(osjob_t* j) {
   readValue = getFirstValueFromCSV("error_state.csv", &error);
 
   printf("We read from file the value : %u, got error ? %s\n", readValue, error ? "yes" : "no");
-
-  // Save 
+ 
   mydata[0] = readValue;
-
 
   // Check if there is not a current TX/RX job running
   if (LMIC.opmode & OP_TXRXPEND) {

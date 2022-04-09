@@ -1,15 +1,12 @@
 # Makefile
-# Sample for ttn-otaa example on Raspberry Pi
-# Caution: requires bcm2835 library to be already installed
-# http://www.airspayce.com/mikem/bcm2835/
 
 CC       = g++
 CFLAGS   = -std=c++11 -DRASPBERRY_PI -DBCM2835_NO_DELAY_COMPATIBILITY -D__BASEFILE__=\"$*\"
 LIBS     = -lbcm2835
-LMICBASE = ../../src
+LMICBASE = ../src
 INCLUDE  = -I$(LMICBASE) 
 
-all: ttn-otaa 
+all: csv_error_state_send
 
 raspi.o: $(LMICBASE)/raspi/raspi.cpp
 				$(CC) $(CFLAGS) -c $(LMICBASE)/raspi/raspi.cpp $(INCLUDE)
@@ -29,11 +26,11 @@ hal.o: $(LMICBASE)/hal/hal.cpp
 aes.o: $(LMICBASE)/aes/lmic.c
 				$(CC) $(CFLAGS) -c $(LMICBASE)/aes/lmic.c $(INCLUDE) -o aes.o
 
-ttn-otaa.o: ttn-otaa.cpp
+csv_error_state_send.o: csv_error_state_send.cpp
 				$(CC) $(CFLAGS) -c $(INCLUDE) $<
 
-ttn-otaa: ttn-otaa.o raspi.o radio.o oslmic.o lmic.o hal.o aes.o
-				$(CC) $^ $(LIBS) -o ttn-otaa
+csv_error_state_send: csv_error_state_send.o raspi.o radio.o oslmic.o lmic.o hal.o aes.o
+				$(CC) $^ $(LIBS) -o csv_error_state_send
 
 clean:
-				rm -rf *.o ttn-otaa
+				rm -rf *.o csv_error_state_send
