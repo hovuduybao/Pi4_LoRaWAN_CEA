@@ -28,5 +28,5 @@ sudo make install
 
 # Github for project 
 git clone https://github.com/hovuduybao/Pi4_LoRaWAN_CEA/
-cd csv_error_state_send
+cd Pi4_LoRaWAN_CEA/csv_error_state_send
 make clean && make && sudo ./csv_error_state_send
